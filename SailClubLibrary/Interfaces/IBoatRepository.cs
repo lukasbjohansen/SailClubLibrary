@@ -22,7 +22,8 @@ namespace SailClubLibrary.Interfaces
         void RemoveBoat(string sailNumber);
         void UpdateBoat(Boat boat);
         Boat? SearchBoat(string sailNumber);
-        List<Boat> FilterBoats(string filterCriteria);
+        int SearchLowestNotTakenId();
+		List<Boat> FilterBoats(string filterCriteria);
         #endregion
     }
 }

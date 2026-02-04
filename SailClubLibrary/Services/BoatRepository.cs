@@ -105,8 +105,89 @@ namespace SailClubLibrary.Services
             }
             Console.WriteLine();
         }
+		public int SearchLowestNotTakenIdBoolArray() // O(N)
+		{
+			int count = _boats.Count;
+			if (count == 0)
+				throw new Exception();
 
-        public List<Boat> FilterBoats(string filterCriteria)
+			bool[] present = new bool[count + 1];
+
+			foreach (var boat in _boats.Values)
+			{
+				if (boat.Id >= 0 && boat.Id < count)
+				{
+					present[boat.Id] = true;
+				}
+			}
+
+			for (int i = 0; i <= count; i++)
+			{
+				if (!present[i])
+					return i;
+			}
+
+			return count;
+		}
+		public int SearchLowestNotTakenId() // O(N)
+		{
+            int count = _boats.Count;
+			if (count == 0)
+				throw new Exception();
+            HashSet<int> ids = _boats.Values.Select(b => b.Id).ToHashSet();
+            for (int i = 0; i < count; i++)
+            {
+                if (!ids.Contains(i))
+                    return i;
+            }
+            return Count;
+		}
+		public int SearchLowestNotTakenIdNPlusSort() // O(Nlog(N))
+		{
+            if (_boats.Count == 0)
+                throw new Exception();
+			List<Boat> boats = _boats.Values.ToList();
+			List<int> ids = boats.Select(b => b.Id).ToList();
+            ids.Sort();
+
+            int lowestAvailable = 0;
+            foreach(int i in ids)
+            {
+                if (lowestAvailable == i)
+                {
+                    lowestAvailable++;
+                }
+                else
+                {
+                    return lowestAvailable;
+                } 
+            }
+            return lowestAvailable;
+		}
+		public int SearchLowestNotTakenIdN2() // O(N^2)
+		{
+			List<Boat> boats = _boats.Values.ToList();
+
+			int lowestId = 0;
+			bool found = false;
+			while (!found)
+			{
+				found = true;
+				foreach (var boat in boats)
+				{
+					if (boat.Id == lowestId)
+					{
+						lowestId++;
+						found = false;
+						boats.Remove(boat);
+						break;
+					}
+				}
+			}
+			return lowestId;
+		}
+
+		public List<Boat> FilterBoats(string filterCriteria)
         {
             throw new NotImplementedException();
         }
