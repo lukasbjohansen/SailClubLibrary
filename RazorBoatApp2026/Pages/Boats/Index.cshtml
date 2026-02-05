@@ -7,9 +7,7 @@
 
 <h1>List of boats</h1>
 
-<p>
-	<a asp-page="createboat">Create a new boat</a>
-</p>
+<a asp-page="createboat" class="btn btn-success btn-sm">Add boat</a>
 
 <table class="table">
 	<thead>
@@ -19,6 +17,7 @@
 			<th>Model</th>
 			<th>SailNumber</th>
 			<th>YearOfConstruction</th>
+			<th style ="width: 1%" class="text-center">Edit</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -30,6 +29,11 @@
 				<td>@boat.Model</td>
 				<td>@boat.SailNumber</td>
 				<td>@boat.YearOfConstruction</td>
+				<td class="text-nowrap">
+					<a asp-page="/Boats/EditBoat" asp-route-sailNumber="@boat.SailNumber" class="btn btn-outline-secondary btn-sm">
+						<i class="bi bi-pencil-square"></i> Edit
+					</a>
+				</td>
 			</tr>
 		}
 	</tbody>
