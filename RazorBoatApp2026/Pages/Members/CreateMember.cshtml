@@ -1,0 +1,52 @@
+﻿@page
+@using SailClubLibrary.Models
+@model RazorBoatApp2026.Pages.Members.CreateMemberModel
+@{
+	ViewData["Title"] = "Create member";
+}
+
+<h1>Create member</h1>
+
+<form method="post">
+	<div class="form-group">
+		<label asp-for="@Model.NewMember.Id" class="control-label"></label>
+		<input asp-for="@Model.NewMember.Id" readonly class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="@Model.NewMember.FirstName" class="control-label"></label>
+		<input asp-for="@Model.NewMember.FirstName" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="@Model.NewMember.SurName" class="control-label"></label>
+		<input asp-for="@Model.NewMember.SurName" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="@Model.NewMember.PhoneNumber" class="control-label"></label>
+		<input asp-for="@Model.NewMember.PhoneNumber" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="@Model.NewMember.Address" class="control-label"></label>
+		<input asp-for="@Model.NewMember.Address" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="@Model.NewMember.City" class="control-label"></label>
+		<input asp-for="@Model.NewMember.City" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="@Model.NewMember.Mail" class="control-label"></label>
+		<input asp-for="@Model.NewMember.Mail" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="@Model.NewMember.TheMemberType" class="control-label"></label>
+		<select asp-for="@Model.NewMember.TheMemberType" asp-items="Html.GetEnumSelectList<MemberType>()" class="form-control"></select>
+	</div>
+	<div class="form-group">
+		<label asp-for="@Model.NewMember.TheMemberRole" class="control-label"></label>
+		<select asp-for="@Model.NewMember.TheMemberRole" asp-items="Html.GetEnumSelectList<MemberRole>()" class="form-control"></select>
+	</div>
+
+	<div class="form-group mt-2">
+		<input type="submit" value="Save" class="btn btn-outline-success" />
+		<a asp-page="index" class="btn btn-outline-secondary">Cancel</a>
+	</div>
+</form>

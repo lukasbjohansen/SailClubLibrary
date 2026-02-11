@@ -1,11 +1,13 @@
 using SailClubLibrary.Interfaces;
+using SailClubLibrary.Models;
 using SailClubLibrary.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddTransient<IBoatRepository,BoatRepository>();
+builder.Services.AddSingleton<IBoatRepository,BoatRepository>();
+builder.Services.AddSingleton<IMemberRepository,MemberRepository>();
 
 var app = builder.Build();
 

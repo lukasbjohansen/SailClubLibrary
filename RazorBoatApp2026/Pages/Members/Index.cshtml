@@ -1,0 +1,48 @@
+﻿@page
+@using SailClubLibrary.Models
+@model RazorBoatApp2026.Pages.Members.IndexModel
+@{
+	ViewData["Title"] = "List members";
+}
+
+<h1>List of members</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Address</th>
+			<th>Phone</th>
+			<th>Mail</th>
+			<th style="width: 1%" class="text-center">Edit</th>
+			<th style="width: 1%" class="text-center">Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Member member in Model.Members)
+		{
+			<tr>
+				<td>@member.Id</td>
+				<td>@member.FirstName @member.SurName</td>
+				<td>@member.Address, @member.City</td>
+				<td>@member.PhoneNumber</td>
+				<td>@member.Mail</td>
+				<td class="text-nowrap">
+					<a asp-page="/Members/EditMember" asp-route-phoneNumber="@member.PhoneNumber" class="btn btn-outline-secondary btn-sm">
+						<i class="bi bi-pencil-square"></i> Edit
+					</a>
+				</td>
+				<td class="text-nowrap">
+					<form method="post" asp-page-handler="Delete" asp-route-phoneNumber="@member.PhoneNumber">
+						<button type="submit" class="btn btn-danger btn-sm">
+							<i class="bi bi-trash"></i>
+						</button>
+					</form>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<a asp-page="createMember" class="btn btn-success btn-sm">Add member</a>

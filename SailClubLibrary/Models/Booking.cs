@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SailClubLibrary.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SailClubLibrary.Models
 {
-    public class Booking
+    public class Booking : IRepositoryItem<int>
     {
         #region Instance Fields
 
@@ -14,7 +15,8 @@ namespace SailClubLibrary.Models
         #endregion
         #region Properties
         public int Id { get; set; }
-        public DateTime StartDate { get; set; }
+        public int Key { get => Id; set => Id = value; }
+		public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsActive
         {

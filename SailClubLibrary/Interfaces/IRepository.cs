@@ -7,20 +7,19 @@ using System.Threading.Tasks;
 
 namespace SailClubLibrary.Interfaces
 {
-	public interface IBoatRepository
+	public interface IRepository<K, V> where V : IRepositoryItem<K>
 	{
 		#region Properties
 		public int Count { get; }
 		#endregion
 
 		#region Methods
-		List<Boat> GetAll();
-		void Add(Boat item);
-		void Remove(string key);
-		void Update(Boat item);
-		Boat? Search(string key);
-		List<Boat> Filter(string filterCriteria);
-		int SearchLowestNotTakenId();
+		List<V> GetAll();
+		void Add(V item);
+		void Remove(K key);
+		void Update(V item);
+		V? Search(K key);
+		List<V> Filter(string filterCriteria);
 		#endregion
 	}
 }

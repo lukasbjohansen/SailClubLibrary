@@ -1,15 +1,21 @@
-﻿@page "{sailNumber}"
+﻿@page
 @using SailClubLibrary.Models
 @model RazorBoatApp2026.Pages.Boats.EditBoatModel
 @{
     ViewData["Title"] = "Edit boat";
 }
 
-<h1>Edit boat</h1>
+<h1><i class="bi bi-pencil-square"></i> Edit boat @Model.NewBoat.Id: @Model.NewBoat.SailNumber</h1>
 
 <form method="post">
-	<input type="hidden" asp-for="@Model.NewBoat.Id" />
-	<input type="hidden" asp-for="@Model.NewBoat.SailNumber" />
+	<div class="form-group">
+		<label asp-for="@Model.NewBoat.Id" class="control-label"></label>
+		<input asp-for="@Model.NewBoat.Id" readonly class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="@Model.NewBoat.SailNumber" class="control-label"></label>
+		<input asp-for="@Model.NewBoat.SailNumber" readonly class="form-control" />
+	</div>
 	<div class="form-group">
 		<label asp-for="@Model.NewBoat.TheBoatType" class="control-label"></label>
 		<select asp-for="@Model.NewBoat.TheBoatType" asp-items="Html.GetEnumSelectList<BoatType>()" class="form-control"></select>
@@ -40,10 +46,10 @@
 	</div>
 
 	<div class="form-group mt-2">
-		<input type="submit" value="Save changes" class="btn btn-outline-success" />
-		<a asp-page="index" class="btn btn-outline-secondary ms-2">Cancel</a>
+		<input type="submit" value="Save" class="btn btn-outline-success" />
+		<a asp-page="index" class="btn btn-outline-secondary">Cancel</a>
 		<button type="submit" asp-page-handler="Delete" class="btn btn-danger">
-			<i class="bi bi-trash"></i> Delete Boat
+			<i class="bi bi-trash"></i> Delete
 		</button>
 	</div>
 </form>

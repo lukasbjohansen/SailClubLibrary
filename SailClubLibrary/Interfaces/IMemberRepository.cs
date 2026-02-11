@@ -7,15 +7,20 @@ using System.Threading.Tasks;
 
 namespace SailClubLibrary.Interfaces
 {
-    public interface IMemberRepository
-    {
-        int Count { get; }
-        void AddMember(Member member);
-        void RemoveMember(Member member);
-        void UpdateMember(Member member);
-        List<Member> GetAllMembers();
-        void PrintAll();
-        Member? SearchMember(string phoneNumber);
-        List<Member> FilterMembers(string filterCriteria);
-    }
+	public interface IMemberRepository
+	{
+		#region Properties
+		public int Count { get; }
+		#endregion
+
+		#region Methods
+		List<Member> GetAll();
+		void Add(Member item);
+		void Remove(string key);
+		void Update(Member item);
+		Member? Search(string key);
+		List<Member> Filter(string filterCriteria);
+		int SearchLowestNotTakenId();
+		#endregion
+	}
 }

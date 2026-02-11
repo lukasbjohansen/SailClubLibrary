@@ -15,16 +15,16 @@ namespace RazorBoatApp2026.Pages.Boats
         }
         public void OnGet(string sailNumber)
         {
-            NewBoat = _bRepo.SearchBoat(sailNumber);
+            NewBoat = _bRepo.Search(sailNumber);
         }
         public IActionResult OnPost()
         {
-            _bRepo.UpdateBoat(NewBoat);
+            _bRepo.Update(NewBoat);
             return RedirectToPage("Index");
         }
         public IActionResult OnPostDelete()
         {
-            _bRepo.RemoveBoat(NewBoat.SailNumber);
+            _bRepo.Remove(NewBoat.SailNumber);
             return RedirectToPage("Index");
         }
     }
