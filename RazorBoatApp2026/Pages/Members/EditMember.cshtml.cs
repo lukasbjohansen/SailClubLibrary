@@ -19,7 +19,11 @@ namespace RazorMemberApp2026.Pages.Members
 		}
 		public IActionResult OnPost()
 		{
-			_mRepo.Update(NewMember);
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            _mRepo.Update(NewMember);
 			return RedirectToPage("Index");
 		}
 		public IActionResult OnPostDelete()

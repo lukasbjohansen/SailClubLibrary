@@ -19,6 +19,10 @@ namespace RazorBoatApp2026.Pages.Boats
         }
         public IActionResult OnPost()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
             _bRepo.Update(NewBoat);
             return RedirectToPage("Index");
         }

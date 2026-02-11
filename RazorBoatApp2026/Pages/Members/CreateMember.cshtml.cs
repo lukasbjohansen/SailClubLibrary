@@ -23,7 +23,6 @@ namespace RazorBoatApp2026.Pages.Members
 		{
 			if (!ModelState.IsValid)
 			{
-				ViewData["ErrorMessage"] = "Every field must be filled";
 				return Page();
 			}
 			try

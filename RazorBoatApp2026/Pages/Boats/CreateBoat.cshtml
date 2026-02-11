@@ -11,38 +11,47 @@
 	<div class="form-group">
 		<label asp-for="@Model.NewBoat.Id" class="control-label"></label>
 		<input asp-for="@Model.NewBoat.Id" readonly class="form-control" />
+		<span asp-validation-for="@Model.NewBoat.Id" class="text-danger"></span>
 	</div>
 	<div class="form-group">
 		<label asp-for="@Model.NewBoat.TheBoatType" class="control-label"></label>
 		<select asp-for="@Model.NewBoat.TheBoatType" asp-items="Html.GetEnumSelectList<BoatType>()" class="form-control"></select>
+		<span asp-validation-for="@Model.NewBoat.TheBoatType" class="text-danger"></span>
 	</div>
 	<div class="form-group">
 		<label asp-for="@Model.NewBoat.Model" class="control-label"></label>
 		<input asp-for="@Model.NewBoat.Model" class="form-control" />
+		<span asp-validation-for="@Model.NewBoat.Model" class="text-danger"></span>
 	</div>
 	<div class="form-group">
 		<label asp-for="@Model.NewBoat.SailNumber" class="control-label"></label>
 		<input asp-for="@Model.NewBoat.SailNumber" class="form-control" />
+		<span asp-validation-for="@Model.NewBoat.SailNumber" class="text-danger"></span>
 	</div>
 	<div class="form-group">
 		<label asp-for="@Model.NewBoat.EngineInfo" class="control-label"></label>
 		<input asp-for="@Model.NewBoat.EngineInfo" class="form-control" />
+		<span asp-validation-for="@Model.NewBoat.EngineInfo" class="text-danger"></span>
 	</div>
 	<div class="form-group">
 		<label asp-for="@Model.NewBoat.Draft" class="control-label"></label>
 		<input asp-for="@Model.NewBoat.Draft" class="form-control" />
+		<span asp-validation-for="@Model.NewBoat.Draft" class="text-danger"></span>
 	</div>
 	<div class="form-group">
 		<label asp-for="@Model.NewBoat.Width" class="control-label"></label>
 		<input asp-for="@Model.NewBoat.Width" class="form-control" />
+		<span asp-validation-for="@Model.NewBoat.Width" class="text-danger"></span>
 	</div>
 	<div class="form-group">
 		<label asp-for="@Model.NewBoat.Length" class="control-label"></label>
 		<input asp-for="@Model.NewBoat.Length" class="form-control" />
+		<span asp-validation-for="@Model.NewBoat.Length" class="text-danger"></span>
 	</div>
 	<div class="form-group">
 		<label asp-for="@Model.NewBoat.YearOfConstruction" class="control-label"></label>
 		<input asp-for="@Model.NewBoat.YearOfConstruction" class="form-control" />
+		<span asp-validation-for="@Model.NewBoat.YearOfConstruction" class="text-danger"></span>
 	</div>
 
 	<div class="form-group mt-2">

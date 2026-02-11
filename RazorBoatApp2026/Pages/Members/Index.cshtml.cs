@@ -9,14 +9,22 @@ namespace RazorBoatApp2026.Pages.Members
 	{
 		private IMemberRepository _mRepo;
 		public List<Member> Members{ get; set; }
-		public IndexModel(IMemberRepository memberRepository)
+        [BindProperty(SupportsGet = true)] public string FilterCriteria { get; set; }
+        public IndexModel(IMemberRepository memberRepository)
 		{
 			_mRepo = memberRepository;
 		}
 		public void OnGet()
 		{
-			Members = _mRepo.GetAll().OrderBy(b => b.Id).ToList();
-		}
+            if (!string.IsNullOrEmpty(FilterCriteria))
+            {
+                Members = _mRepo.Filter(FilterCriteria);
+            }
+            else
+            {
+                Members = _mRepo.GetAll().OrderBy(b => b.Id).ToList();
+            }
+        }
 		public IActionResult OnPostDelete(string phoneNumber)
 		{
 			_mRepo.Remove(phoneNumber);

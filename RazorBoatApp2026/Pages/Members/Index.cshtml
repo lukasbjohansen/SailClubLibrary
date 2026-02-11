@@ -7,6 +7,24 @@
 
 <h1>List of members</h1>
 
+<form method="get" class="mb-4">
+	<div class="input-group">
+		<input type="text"
+			   asp-for="@Model.FilterCriteria"
+			   class="form-control"
+			   placeholder="Search member..."
+			   aria-label="Search"
+			   aria-describedby="search-addon" />
+		@if (!string.IsNullOrEmpty(Model.FilterCriteria))
+		{
+			<a asp-page="./Index" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>
+		}
+		<button class="btn btn-primary" type="submit" id="button-filter">
+			<i class="bi bi-search"></i>
+		</button>
+	</div>
+</form>
+
 <table class="table">
 	<thead>
 		<tr>
@@ -45,4 +63,4 @@
 	</tbody>
 </table>
 
-<a asp-page="createMember" class="btn btn-success btn-sm">Add member</a>
+<a asp-page="createmember" class="btn btn-success btn-sm"><i class="bi bi-plus-circle-dotted"></i>  Add member</a>
