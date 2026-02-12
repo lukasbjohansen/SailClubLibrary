@@ -29,11 +29,48 @@
 	<thead>
 		<tr>
 			<form method="get">
-			<th><button type="submit" class="btn btn-link" name="SortBy" value="Id">Id</button></th>
-			<th>BoatType</th>
-			<th>Model</th>
-			<th>SailNumber</th>
-			<th>YearOfConstruction</th>
+				<input type="hidden" name="SortDescending" id="SortDescending" value="@Model.SortDescending.ToString().ToLower()" />
+				<input type="hidden" asp-for="@Model.FilterCriteria" />
+			<th>
+				<button type="submit" name="SortBy" value="Id"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'Id') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					Id
+					<i class="bi @Model.GetSortIcon("Id")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="BoatType"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'BoatType') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					BoatType
+					<i class="bi @Model.GetSortIcon("BoatType")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="Model"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'Model') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					Model
+					<i class="bi @Model.GetSortIcon("Model")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="SailNumber"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'SailNumber') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					SailNumber
+					<i class="bi @Model.GetSortIcon("SailNumber")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="YearOfConstruction"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'YearOfConstruction') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					YearOfConstruction
+					<i class="bi @Model.GetSortIcon("YearOfConstruction")"></i>
+				</button>
+			</th>
 			<th style="width: 1%" class="text-center">Edit</th>
 			<th style="width: 1%" class="text-center">Delete</th>
 			</form>

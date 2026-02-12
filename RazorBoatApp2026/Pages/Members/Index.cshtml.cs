@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SailClubLibrary.Interfaces;
 using SailClubLibrary.Models;
+using System.Globalization;
 
 namespace RazorBoatApp2026.Pages.Members
 {
@@ -9,26 +10,45 @@ namespace RazorBoatApp2026.Pages.Members
 	{
 		private IMemberRepository _mRepo;
 		public List<Member> Members{ get; set; }
+        [BindProperty(SupportsGet = true)] public string SortBy { get; set; }
+        [BindProperty(SupportsGet = true)] public bool SortDescending { get; set; }
         [BindProperty(SupportsGet = true)] public string FilterCriteria { get; set; }
         public IndexModel(IMemberRepository memberRepository)
 		{
 			_mRepo = memberRepository;
 		}
-		public void OnGet()
-		{
-            if (!string.IsNullOrEmpty(FilterCriteria))
+        public IActionResult OnGet()
+        {
+            Members = !string.IsNullOrEmpty(FilterCriteria) ? _mRepo.Filter(FilterCriteria) : _mRepo.GetAll();
+            switch (SortBy)
             {
-                Members = _mRepo.Filter(FilterCriteria);
+                case "Name":
+                    Members.Sort(new CompareByMemberName(SortDescending));
+                    break;
+                case "Address":
+                    Members.Sort(new CompareByMemberAddress(SortDescending));
+                    break;
+                case "Phone":
+                    Members.Sort(new CompareByMemberPhone(SortDescending));
+                    break;
+                case "Mail":
+                    Members.Sort(new CompareByMemberMail(SortDescending));
+                    break;
+                default:
+                    Members.Sort(new CompareById(SortDescending));
+                    break;
             }
-            else
-            {
-                Members = _mRepo.GetAll().OrderBy(b => b.Id).ToList();
-            }
+            return Page();
         }
-		public IActionResult OnPostDelete(string phoneNumber)
+        public IActionResult OnPostDelete(string phoneNumber)
 		{
 			_mRepo.Remove(phoneNumber);
 			return RedirectToPage("Index");
 		}
-	}
+        public string GetSortIcon(string column)
+        {
+            if (SortBy != column) return "bi-arrows-expand";
+            return SortDescending ? "bi-arrow-bar-up" : "bi-arrow-bar-down";
+        }
+    }
 }

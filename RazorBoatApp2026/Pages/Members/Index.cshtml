@@ -28,13 +28,52 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>Id</th>
-			<th>Name</th>
-			<th>Address</th>
-			<th>Phone</th>
-			<th>Mail</th>
+			<form method="get">
+				<input type="hidden" name="SortDescending" id="SortDescending" value="@Model.SortDescending.ToString().ToLower()" />
+				<input type="hidden" asp-for="@Model.FilterCriteria" />
+			<th>
+				<button type="submit" name="SortBy" value="Id"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'Id') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					Id
+					<i class="bi @Model.GetSortIcon("Id")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="Name"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'Name') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					Name
+					<i class="bi @Model.GetSortIcon("Name")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="Address"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'Address') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					Address
+					<i class="bi @Model.GetSortIcon("Address")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="Phone"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'Phone') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					Phone
+					<i class="bi @Model.GetSortIcon("Phone")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="Mail"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'Mail') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					Mail
+					<i class="bi @Model.GetSortIcon("Mail")"></i>
+				</button>
+			</th>
 			<th style="width: 1%" class="text-center">Edit</th>
 			<th style="width: 1%" class="text-center">Delete</th>
+			</form>
 		</tr>
 	</thead>
 	<tbody>

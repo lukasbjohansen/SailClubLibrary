@@ -1,21 +1,21 @@
 ﻿using SailClubLibrary.Interfaces;
 using SailClubLibrary.Models;
 
-public class CompareById : IComparer<IIdAble>
+public class CompareByMemberMail : IComparer<Member>
 {
     private readonly bool _descending;
-    public CompareById(bool descending = false)
+    public CompareByMemberMail(bool descending = false)
     {
         _descending = descending;
     }
 
-    public int Compare(IIdAble? x, IIdAble? y)
+    public int Compare(Member? x, Member? y)
     {
         int result;
         if (x == null && y == null) result = 0;
         if (y == null) result = 1;
         if (x == null) result = -1;
-        result = x.Id.CompareTo(y.Id);
+        result = x.Mail.CompareTo(y.Mail);
         return _descending ? -result : result;
     }
 }
