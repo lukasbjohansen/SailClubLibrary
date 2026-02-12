@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SailClubLibrary.Helpers.Sorting;
 using SailClubLibrary.Interfaces;
 using SailClubLibrary.Models;
 
@@ -9,12 +10,13 @@ namespace RazorBoatApp2026.Pages.Boats
     {
 		private IBoatRepository _bRepo;
 		public List<Boat> Boats { get; set; }
+		[BindProperty(SupportsGet = true)] public string SortBy { get; set; }
 		[BindProperty(SupportsGet = true)] public string FilterCriteria { get; set; }
 		public IndexModel(IBoatRepository boatRepository)
 		{
 			_bRepo = boatRepository;
 		}
-		public void OnGet()
+		public IActionResult OnGet()
         {
 			if (!string.IsNullOrEmpty(FilterCriteria))
 			{
@@ -22,8 +24,16 @@ namespace RazorBoatApp2026.Pages.Boats
 			}
 			else
 			{
-				Boats = _bRepo.GetAll().OrderBy(b => b.Id).ToList();
+				Boats = _bRepo.GetAll();
+				//Boats.Sort(new CompareById());
 			}
+			switch (SortBy)
+			{
+				case "Id":
+					Boats.Sort(new CompareById());
+					break;
+			}
+			return Page();
 		}
 		public IActionResult OnPostDelete(string sailNumber)
 		{

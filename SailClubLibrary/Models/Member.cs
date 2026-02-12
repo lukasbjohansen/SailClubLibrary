@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SailClubLibrary.Models
 {
-    public class Member : IRepositoryItem<string>
+    public class Member : IRepositoryItem<string>, IIdAble
     {
         #region Instance Fields
         #endregion

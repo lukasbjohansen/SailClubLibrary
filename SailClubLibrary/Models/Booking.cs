@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SailClubLibrary.Models
 {
-    public class Booking : IRepositoryItem<int>
+    public class Booking : IRepositoryItem<int>, IIdAble
     {
         #region Instance Fields
 
