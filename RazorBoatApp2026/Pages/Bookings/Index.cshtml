@@ -1,0 +1,115 @@
+﻿@page
+@using SailClubLibrary.Models
+@model RazorBoatApp2026.Pages.Bookings.IndexModel
+@{
+	ViewData["Title"] = "List bookings";
+}
+
+<h1>List of bookings</h1>
+
+<form method="get" class="mb-4">
+	<div class="input-group">
+		<input type="text"
+			   asp-for="@Model.FilterCriteria"
+			   class="form-control"
+			   placeholder="Search booking..."
+			   aria-label="Search"
+			   aria-describedby="search-addon" />
+		@if (!string.IsNullOrEmpty(Model.FilterCriteria))
+		{
+			<a asp-page="./Index" class="btn btn-outline-secondary"><i class="bi bi-x"></i></a>
+		}
+		<button class="btn btn-primary" type="submit" id="button-filter">
+			<i class="bi bi-search"></i>
+		</button>
+	</div>
+</form>
+
+<table class="table">
+	<thead>
+		<tr>
+			<form method="get">
+				<input type="hidden" name="SortDescending" id="SortDescending" value="@Model.SortDescending.ToString().ToLower()" />
+				<input type="hidden" asp-for="@Model.FilterCriteria" />
+			<th>
+				<button type="submit" name="SortBy" value="Id"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'Id') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					Id
+					<i class="bi @Model.GetSortIcon("Id")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="StartDate"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'StartDate') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					StartDate
+					<i class="bi @Model.GetSortIcon("StartDate")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="EndDate"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'EndDate') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					EndDate
+					<i class="bi @Model.GetSortIcon("EndDate")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="Destination"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'Destination') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					Destination
+					<i class="bi @Model.GetSortIcon("Destination")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="Member"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'Member') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					Member
+					<i class="bi @Model.GetSortIcon("Member")"></i>
+				</button>
+			</th>
+			<th>
+				<button type="submit" name="SortBy" value="Boat"
+						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'Boat') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
+						class="btn p-0 text-reset fw-bold border-0 shadow-none">
+					Boat
+					<i class="bi @Model.GetSortIcon("Boat")"></i>
+				</button>
+			</th>
+			<th style="width: 1%" class="text-center">Edit</th>
+			<th style="width: 1%" class="text-center">Delete</th>
+			</form>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Booking booking in Model.Bookings)
+		{
+			string rowStyle = booking.IsActive ? "table-success" : "table-secondary";
+			<tr class="@rowStyle">
+				<td>@booking.Id</td>
+				<td>@booking.StartDate</td>
+				<td>@booking.EndDate</td>
+				<td>@booking.Destination</td>
+				<td>@booking.TheMember.FullName</td>
+				<td>@booking.TheBoat.SailNumber</td>
+				<td class="text-nowrap">
+					<a asp-page="/Bookings/EditBooking" asp-route-id="@booking.Id" class="btn btn-outline-secondary btn-sm">
+						<i class="bi bi-pencil-square"></i> Edit
+					</a>
+				</td>
+				<td class="text-nowrap">
+					<form method="post" asp-page-handler="Delete" asp-route-id="@booking.Id">
+						<button type="submit" class="btn btn-danger btn-sm">
+							<i class="bi bi-trash"></i>
+						</button>
+					</form>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<a asp-page="createbooking" class="btn btn-success btn-sm"><i class="bi bi-plus-circle-dotted"></i>  Add booking</a>

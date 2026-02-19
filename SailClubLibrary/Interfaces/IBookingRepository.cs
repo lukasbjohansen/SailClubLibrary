@@ -12,12 +12,13 @@ namespace SailClubLibrary.Interfaces
     /// </summary>
     public interface IBookingRepository
     {
-        void AddBooking(Booking booking);
-        void RemoveBooking(Booking b);
-        List<Booking> GetAllBookings();
-        void UpdateBooking(int id, Booking newBooking);
-        void PrintAll();
-        int GetBookingCountForMember(Member member);
-        Dictionary<string, int> GetAllBookingsForMembers();
-    }
+        int Count { get; }
+		List<Booking> GetAll();
+		void Add(Booking item);
+        void Remove(int key);
+        void Update(Booking item);
+		Booking? Search(int key);
+		List<Booking> Filter(string filterCriteria);
+		int SearchLowestNotTakenId();
+	}
 }

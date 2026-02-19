@@ -17,23 +17,32 @@ namespace SailClubLibrary.Data
              { "65345890", new Member(2, "Charlotte","Hansen","65345890","Street 1","Roskilde","ch@gamil.com",MemberType.Adult,MemberRole.Admin) },
             };
 
-        private Dictionary<string, Boat> _boatData =
-              new Dictionary<string, Boat>()
-              {
-            { "16-3335", new Boat(1, BoatType.TERA, "Model", "16-3335", "Is very good :3", 32, 23, 33, "1982")},
-            { "17-8767", new Boat(2, BoatType.LYNÆS, "Model", "17-8767", "Fast :3", 34, 25, 17, "2000")},
+		private Dictionary<string, Boat> _boatData =
+			  new Dictionary<string, Boat>()
+			  {
+			{ "16-3335", new Boat(1, BoatType.TERA, "Model", "16-3335", "Is very good :3", 32, 23, 33, "1982")},
+			{ "17-8767", new Boat(2, BoatType.LYNÆS, "Model", "17-8767", "Fast :3", 34, 25, 17, "2000")},
 
-              };
-        #endregion
+			  };
+		private Dictionary<int, Booking> _bookingData =
+			  new Dictionary<int, Booking>()
+			  {
 
-        #region Properties
-        public Dictionary<string, Member> MemberData
+			  };
+		#endregion
+
+		#region Properties
+		public Dictionary<string, Member> MemberData
         {
             get { return _memberData; }
         }
         public Dictionary<string, Boat> BoatData
         {
             get { return _boatData; }
+        }
+        public Dictionary<int, Booking> BookingData
+        {
+            get { return _bookingData; }
         }
 
         #endregion

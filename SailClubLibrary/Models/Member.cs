@@ -15,6 +15,13 @@ namespace SailClubLibrary.Models
         #region Properties
         public string FirstName { get; set; }
         public string SurName { get; set; }
+        public string FullName 
+        { 
+            get
+            {
+                return FirstName + " " + SurName;
+            } 
+        }
         public string PhoneNumber { get; set; }
         public string Key { get => PhoneNumber; set => PhoneNumber = value; }
 		public string Address { get; set; }

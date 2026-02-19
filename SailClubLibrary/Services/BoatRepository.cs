@@ -19,7 +19,7 @@ namespace SailClubLibrary.Services
 		{
 			int count = _dictionary.Count;
 			if (count == 0)
-				throw new Exception();
+				return 0;
 			HashSet<int> ids = _dictionary.Values.Select(b => b.Id).ToHashSet();
 			for (int i = 0; i < count; i++)
 			{

@@ -1,6 +1,7 @@
 ﻿using SailClubLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,16 +10,12 @@ namespace SailClubLibrary.Models
 {
     public class Booking : IRepositoryItem<int>, IIdAble
     {
-        #region Instance Fields
-
-        private bool _isActive;
-        #endregion
         #region Properties
         public int Id { get; set; }
         public int Key { get => Id; set => Id = value; }
 		public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public bool IsActive
+		public DateTime EndDate { get; set; }
+		public bool IsActive
         {
             get
             {
@@ -39,6 +36,10 @@ namespace SailClubLibrary.Models
             Id = id;
             TheMember = member;
             TheBoat = boat;
+        }
+        public Booking()
+        {
+
         }
         #endregion
         #region Methods
