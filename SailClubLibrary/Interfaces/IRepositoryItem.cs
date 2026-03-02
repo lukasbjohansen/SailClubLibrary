@@ -7,5 +7,6 @@ using System.Threading.Tasks;
 namespace SailClubLibrary.Interfaces;
 public interface IRepositoryItem<K>
 {
-	public K Key { get; set; }
+	K Key { get; set; }
+	int Id { get; set; }
 }

@@ -78,6 +78,20 @@ namespace SailClubLibrary.Services
 			}
 			return items;
 		}
-		#endregion
-	}
+        public int SearchLowestNotTakenId()
+        {
+            List<V> values = GetAll();
+            int count = values.Count();
+            if (count == 0)
+                return 0;
+            HashSet<int> ids = values.Select(b => b.Id).ToHashSet();
+            for (int i = 0; i < count; i++)
+            {
+                if (!ids.Contains(i))
+                    return i;
+            }
+            return count;
+        }
+        #endregion
+    }
 }

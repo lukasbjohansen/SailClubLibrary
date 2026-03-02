@@ -20,6 +20,7 @@ namespace SailClubLibrary.Interfaces
 		void Update(V item);
 		V? Search(K key);
 		List<V> Filter(string filterCriteria);
-		#endregion
-	}
+		int SearchLowestNotTakenId();
+        #endregion
+    }
 }

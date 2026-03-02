@@ -11,7 +11,7 @@ namespace SailClubLibrary.Models
     /// <summary>
     /// Generic Class for Constructing Boat Objects using the interface
     /// </summary>
-    public class Boat : IRepositoryItem<string>, IIdAble
+    public class Boat : IRepositoryItem<string>
     {
         #region Instance Fields
 

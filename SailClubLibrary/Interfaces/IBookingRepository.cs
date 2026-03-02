@@ -10,15 +10,7 @@ namespace SailClubLibrary.Interfaces
     /// <summary>
     /// Interface for the BookingRepository class
     /// </summary>
-    public interface IBookingRepository
+    public interface IBookingRepository : IRepository<int, Booking>
     {
-        int Count { get; }
-		List<Booking> GetAll();
-		void Add(Booking item);
-        void Remove(int key);
-        void Update(Booking item);
-		Booking? Search(int key);
-		List<Booking> Filter(string filterCriteria);
-		int SearchLowestNotTakenId();
 	}
 }

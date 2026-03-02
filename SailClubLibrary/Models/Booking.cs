@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SailClubLibrary.Models
 {
-    public class Booking : IRepositoryItem<int>, IIdAble
+    public class Booking : IRepositoryItem<int>
     {
         #region Properties
         public int Id { get; set; }

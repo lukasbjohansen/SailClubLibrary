@@ -15,18 +15,5 @@ namespace SailClubLibrary.Services
 		public BoatRepository() : base(new MockData().BoatData)
 		{
 		}
-		public int SearchLowestNotTakenId()
-		{
-			int count = _dictionary.Count;
-			if (count == 0)
-				return 0;
-			HashSet<int> ids = _dictionary.Values.Select(b => b.Id).ToHashSet();
-			for (int i = 0; i < count; i++)
-			{
-				if (!ids.Contains(i))
-					return i;
-			}
-			return Count;
-		}
 	}
 }
