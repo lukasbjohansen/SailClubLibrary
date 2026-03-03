@@ -73,7 +73,7 @@ namespace RazorBoatApp2026.Pages.Bookings
 		private void PopulateLists()
 		{
 			MemberOptions = new SelectList(_memberRepo.GetAll(), "PhoneNumber", "FullName");
-			BoatOptions = new SelectList(_boatRepo.GetAll(), "SailNumber");
+			BoatOptions = new SelectList(_boatRepo.GetAll(), "SailNumber", "");
 		}
 	}
 }

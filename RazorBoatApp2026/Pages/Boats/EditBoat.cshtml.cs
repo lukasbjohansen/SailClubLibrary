@@ -15,7 +15,7 @@ namespace RazorBoatApp2026.Pages.Boats
         }
         public void OnGet(string sailNumber)
         {
-            NewBoat = _bRepo.Search(sailNumber);
+            NewBoat = _bRepo.Search(sailNumber)!;
         }
         public IActionResult OnPost()
         {
