@@ -10,17 +10,18 @@ namespace SailClubLibrary.Interfaces
 	public interface IRepositoryAsync<K, V> where V : IRepositoryItem<K>
 	{
 		#region Properties
-		public Task<int> Count { get; }
+		public Task<int> Count();
 		#endregion
 
 		#region Methods
-		Task<List<V>> GetAll();
-		Task Add(V item);
-		Task Remove(K key);
-		Task Update(V item);
-		Task<V?> Search(K key);
-		Task<List<V>> Filter(string filterCriteria);
-		Task<int> SearchLowestNotTakenId();
+		Task<List<V>> GetAllAsync();
+		Task AddAsync(V item);
+		Task RemoveAsync(K key);
+		Task UpdateAsync(V item);
+		Task<V?> SearchAsync(K key);
+		Task<V?> SearchAsync(int id);
+		Task<List<V>> FilterAsync(string filterCriteria);
+		Task<int> SearchLowestNotTakenIdAsync();
         #endregion
     }
 }

@@ -8,9 +8,9 @@ namespace RazorBoatApp2026.Pages.Members
 {
 	public class CreateMemberModel : PageModel
 	{
-		private IMemberRepository _mRepo;
+		private IMemberRepositoryAsync _mRepo;
 		[BindProperty] public Member NewMember { get; set; }
-		public CreateMemberModel(IMemberRepository memberRepository)
+		public CreateMemberModel(IMemberRepositoryAsync memberRepository)
 		{
 			_mRepo = memberRepository;
 		}

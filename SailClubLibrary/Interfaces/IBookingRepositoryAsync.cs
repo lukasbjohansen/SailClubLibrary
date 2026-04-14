@@ -7,10 +7,7 @@ using System.Threading.Tasks;
 
 namespace SailClubLibrary.Interfaces
 {
-    /// <summary>
-    /// Interface for the BookingRepository class
-    /// </summary>
-    public interface IBookingRepository : IRepository<int, Booking>
-    {
-	}
+	public interface IBookingRepositoryAsync : IRepositoryAsync<int, Booking>
+	{
+    }
 }

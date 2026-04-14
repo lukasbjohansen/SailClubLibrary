@@ -7,18 +7,18 @@ namespace RazorBoatApp2026.Pages.Boats
 {
     public class IndexModel : PageModel
     {
-		private IBoatRepository _bRepo;
+		private IBoatRepositoryAsync _bRepo;
 		public List<Boat> Boats { get; set; }
 		[BindProperty(SupportsGet = true)] public string SortBy { get; set; }
         [BindProperty(SupportsGet = true)] public bool SortDescending { get; set; }
         [BindProperty(SupportsGet = true)] public string FilterCriteria { get; set; }
-		public IndexModel(IBoatRepository boatRepository)
+		public IndexModel(IBoatRepositoryAsync boatRepositoryAsync)
 		{
-			_bRepo = boatRepository;
+			_bRepo = boatRepositoryAsync;
 		}
-		public IActionResult OnGet()
+		public async Task<IActionResult> OnGet()
         {
-            Boats = !string.IsNullOrEmpty(FilterCriteria) ? _bRepo.Filter(FilterCriteria) : _bRepo.GetAll();
+            Boats = !string.IsNullOrEmpty(FilterCriteria) ? await _bRepo.FilterAsync(FilterCriteria) : await _bRepo.GetAllAsync();
             switch (SortBy)
             {
                 case "BoatType":
@@ -39,9 +39,9 @@ namespace RazorBoatApp2026.Pages.Boats
             }
             return Page();
 		}
-		public IActionResult OnPostDelete(string sailNumber)
+		public async Task<IActionResult> OnPostDelete(string sailNumber)
 		{
-			_bRepo.Remove(sailNumber);
+			await _bRepo.RemoveAsync(sailNumber);
 			return RedirectToPage("Index");
 		}
         public string GetSortIcon(string column)

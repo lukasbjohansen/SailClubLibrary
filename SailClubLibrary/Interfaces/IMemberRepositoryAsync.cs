@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SailClubLibrary.Interfaces
 {
-	public interface IMemberRepository : IRepository<string, Member>
+	public interface IMemberRepositoryAsync : IRepositoryAsync<string, Member>
 	{
 	}
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SailClubLibrary.Services
 {
-    public class BoatRepository : Repository<string, Boat>, IBoatRepository
+    public class BoatRepository : RepositoryAsync<string, Boat>, IBoatRepository
 	{
 		public BoatRepository() : base(new MockData().BoatData)
 		{

@@ -8,12 +8,12 @@ namespace RazorBoatApp2026.Pages.Members
 {
 	public class IndexModel : PageModel
 	{
-		private IMemberRepository _mRepo;
+		private IMemberRepositoryAsync _mRepo;
 		public List<Member> Members{ get; set; }
         [BindProperty(SupportsGet = true)] public string SortBy { get; set; }
         [BindProperty(SupportsGet = true)] public bool SortDescending { get; set; }
         [BindProperty(SupportsGet = true)] public string FilterCriteria { get; set; }
-        public IndexModel(IMemberRepository memberRepository)
+        public IndexModel(IMemberRepositoryAsync memberRepository)
 		{
 			_mRepo = memberRepository;
 		}

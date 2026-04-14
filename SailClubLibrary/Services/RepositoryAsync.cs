@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using SailClubLibrary.Data;
+﻿using SailClubLibrary.Data;
 using SailClubLibrary.Exceptions;
 using SailClubLibrary.Interfaces;
 using SailClubLibrary.Models;
@@ -11,66 +10,22 @@ using System.Threading.Tasks;
 
 namespace SailClubLibrary.Services
 {
-	public class RepositoryAsync<K, V> : Connection, IRepositoryAsync<K, V> where V : IRepositoryItem<K>
+	public abstract class RepositoryAsync<K, V> : Connection
 	{
-		protected string _tableName;
-		protected List<string> _values;
-		public Task<int> Count => throw new NotImplementedException();
-
-		private string ValuesToString()
+		public abstract Task<List<V>> GetAllAsync();
+		public virtual async Task<int> SearchLowestNotTakenIdAsync()
 		{
-			string result = "Values(";
-			foreach(var item in _values)
+			List<V> values = await GetAllAsync();
+			int count = values.Count();
+			if (count == 0)
+				return 0;
+			HashSet<int> ids = values.Select(b => b.Id).ToHashSet();
+			for (int i = 0; i < count; i++)
 			{
-				result += item;
-				result += ", ";
+				if (!ids.Contains(i))
+					return i;
 			}
-			result = result.Substring(0, result.Length - 2);
-			result += ")";
-			return result;
-		}
-		public async Task Add(V item)
-		{
-			string sql = $"INSERT INTO {_tableName} {ValuesToString()}";
-			using (SqlConnection connection = new SqlConnection(connectionString))
-			{
-				try
-				{
-					await connection.OpenAsync();
-					SqlCommand command = new SqlCommand(sql, connection);
-					command.Parameters.AddWithValue(_values[0], item.)
-				}
-			}
-		}
-
-		public Task<List<V>> Filter(string filterCriteria)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<List<V>> GetAll()
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task Remove(K key)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<V?> Search(K key)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<int> SearchLowestNotTakenId()
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task Update(V item)
-		{
-			throw new NotImplementedException();
+			return count;
 		}
 	}
 }

@@ -7,9 +7,9 @@ namespace RazorMemberApp2026.Pages.Members
 {
 	public class EditMemberModel : PageModel
 	{
-		private IMemberRepository _mRepo;
+		private IMemberRepositoryAsync _mRepo;
 		[BindProperty] public Member NewMember { get; set; }
-		public EditMemberModel(IMemberRepository memberRepository)
+		public EditMemberModel(IMemberRepositoryAsync memberRepository)
 		{
 			_mRepo = memberRepository;
 		}

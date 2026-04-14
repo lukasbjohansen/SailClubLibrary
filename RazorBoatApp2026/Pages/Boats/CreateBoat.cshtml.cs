@@ -8,18 +8,18 @@ namespace RazorBoatApp2026.Pages.Boats
 {
     public class CreateBoatModel : PageModel
     {
-		private IBoatRepository _bRepo;
+		private IBoatRepositoryAsync _bRepo;
 		[BindProperty] public Boat NewBoat { get; set; }
-		public CreateBoatModel(IBoatRepository boatRepository)
+		public CreateBoatModel(IBoatRepositoryAsync boatRepositoryAsync)
 		{
-			_bRepo = boatRepository;
+			_bRepo = boatRepositoryAsync;
 		}
-		public void OnGet()
+		public async Task OnGet()
         {
 			NewBoat = new Boat();
-			NewBoat.Id = _bRepo.SearchLowestNotTakenId();
+			NewBoat.Id = await _bRepo.SearchLowestNotTakenIdAsync();
 		}
-		public IActionResult OnPost()
+		public async Task<IActionResult> OnPost()
 		{
 			if (!ModelState.IsValid)
 			{
@@ -27,7 +27,7 @@ namespace RazorBoatApp2026.Pages.Boats
 			}
 			try
 			{
-				_bRepo.Add(NewBoat);
+				await _bRepo.AddAsync(NewBoat);
 				return RedirectToPage("Index");
 			}
 			catch (BoatSailnumberExistsException bex)
