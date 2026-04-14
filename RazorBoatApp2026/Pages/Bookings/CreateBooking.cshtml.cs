@@ -10,33 +10,33 @@ namespace RazorBoatApp2026.Pages.Bookings
 {
 	public class CreateBookingModel : PageModel
 	{
-		private IBookingRepository _bookingRepo;
-		private IMemberRepository _memberRepo;
-		private IBoatRepository _boatRepo;
+		private IBookingRepositoryAsync _bookingRepo;
+		private IMemberRepositoryAsync _memberRepo;
+		private IBoatRepositoryAsync _boatRepo;
 		[BindProperty] public Booking NewBooking { get; set; }
 		[BindProperty] [Required(ErrorMessage = "Member selection is required")] public string SelectedMemberPhoneNumber { get; set; }
 
 		[BindProperty] [Required(ErrorMessage = "Boat selection is required")] public string SelectedBoatSailNumber { get; set; }
 		public SelectList MemberOptions { get; set; }
 		public SelectList BoatOptions { get; set; }
-		public CreateBookingModel(IMemberRepository memberRepository, IBoatRepository boatRepository, IBookingRepository bookingRepository)
+		public CreateBookingModel(IMemberRepositoryAsync memberRepository, IBoatRepositoryAsync boatRepository, IBookingRepositoryAsync bookingRepository)
 		{
 			_memberRepo = memberRepository;
 			_boatRepo = boatRepository;
 			_bookingRepo = bookingRepository;
 		}
-		public void OnGet()
+		public async Task OnGet()
 		{
 			NewBooking = new Booking()
 			{
-				Id = _bookingRepo.SearchLowestNotTakenId(),
+				Id = await _bookingRepo.SearchLowestNotTakenIdAsync(),
 				StartDate = DateTime.Now,
 				EndDate = DateTime.Now.AddDays(1),
 				SailCompleted = false
 			};
 			PopulateLists();
 		}
-		public IActionResult OnPost()
+		public async Task<IActionResult> OnPost()
 		{
 			ModelState.Remove("NewBooking.TheMember");
 			ModelState.Remove("NewBooking.TheBoat");
@@ -50,11 +50,11 @@ namespace RazorBoatApp2026.Pages.Bookings
 				PopulateLists();
 				return Page();
 			}
-			NewBooking.TheMember = _memberRepo.Search(SelectedMemberPhoneNumber);
-			NewBooking.TheBoat = _boatRepo.Search(SelectedBoatSailNumber);
+			NewBooking.TheMember = await _memberRepo.SearchAsync(SelectedMemberPhoneNumber);
+			NewBooking.TheBoat = await _boatRepo.SearchAsync(SelectedBoatSailNumber);
 			try
 			{
-				_bookingRepo.Add(NewBooking);
+				await _bookingRepo.AddAsync(NewBooking);
 				return RedirectToPage("Index");
 			}
 			catch (BoatSailnumberExistsException bex)
@@ -70,10 +70,10 @@ namespace RazorBoatApp2026.Pages.Bookings
 				return Page();
 			}
 		}
-		private void PopulateLists()
+		private async Task PopulateLists()
 		{
-			MemberOptions = new SelectList(_memberRepo.GetAll(), "PhoneNumber", "FullName");
-			BoatOptions = new SelectList(_boatRepo.GetAll(), "SailNumber", "");
+			MemberOptions = new SelectList(await _memberRepo.GetAllAsync(), "PhoneNumber", "FullName");
+			BoatOptions = new SelectList(await _boatRepo.GetAllAsync(), "SailNumber", "");
 		}
 	}
 }

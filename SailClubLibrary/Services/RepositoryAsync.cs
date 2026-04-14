@@ -1,5 +1,4 @@
-﻿using SailClubLibrary.Data;
-using SailClubLibrary.Exceptions;
+﻿using SailClubLibrary.Exceptions;
 using SailClubLibrary.Interfaces;
 using SailClubLibrary.Models;
 using System;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SailClubLibrary.Services
 {
-	public abstract class RepositoryAsync<K, V> : Connection
+	public abstract class RepositoryAsync<K, V>: Connection where V : IRepositoryItem<K>
 	{
 		public abstract Task<List<V>> GetAllAsync();
 		public virtual async Task<int> SearchLowestNotTakenIdAsync()

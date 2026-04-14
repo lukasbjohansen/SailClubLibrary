@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using SailClubLibrary.Data;
 using SailClubLibrary.Exceptions;
 using SailClubLibrary.Interfaces;
 using SailClubLibrary.Models;
@@ -36,8 +35,8 @@ namespace SailClubLibrary.Services
 
 		public async Task AddAsync(Boat boat)
 		{
-			string _addBoatSql = "INSERT INTO Boat (Model, SailNumber, EngineInfo, Draft, Width, BoatLength, YearOfConstruction, BoatType) " +
-								           "VALUES (@Model, @SailNumber, @EngineInfo, @Draft, @Width, @BoatLength, @YearOfConstruction, @BoatType)";
+			string _addBoatSql = "INSERT INTO Boat (Model, SailNumber, EngineInfo, Draft, Width, BoatLength, YearOfConstruction, BoatType, BoatImage) " +
+                                           "VALUES (@Model, @SailNumber, @EngineInfo, @Draft, @Width, @BoatLength, @YearOfConstruction, @BoatType, @BoatImage)";
 			await using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				try
@@ -52,7 +51,8 @@ namespace SailClubLibrary.Services
 					command.Parameters.AddWithValue("@BoatLength", boat.Length);
 					command.Parameters.AddWithValue("@YearOfConstruction", boat.YearOfConstruction);
 					command.Parameters.AddWithValue("@BoatType", boat.TheBoatType);
-					await command.ExecuteNonQueryAsync();
+                    command.Parameters.AddWithValue("@BoatImage", (object)boat.BoatImage ?? DBNull.Value);
+                    await command.ExecuteNonQueryAsync();
 				}
 				catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
 				{
@@ -193,7 +193,8 @@ namespace SailClubLibrary.Services
                    Draft = @Draft, 
                    Width = @Width, 
                    BoatLength = @Length, 
-                   YearOfConstruction = @YearOfConstruction
+                   YearOfConstruction = @YearOfConstruction,
+                   BoatImage = @BoatImage
                WHERE SailNumber = @SailNumber";
 			await using(SqlConnection connection = new SqlConnection(connectionString))
 			{
@@ -208,7 +209,8 @@ namespace SailClubLibrary.Services
 					command.Parameters.AddWithValue("@Width", boat.Width);
 					command.Parameters.AddWithValue("@Length", boat.Length);
 					command.Parameters.AddWithValue("@YearOfConstruction", boat.YearOfConstruction);
-					command.Parameters.AddWithValue("@SailNumber", boat.SailNumber);
+                    command.Parameters.AddWithValue("@BoatImage", boat.BoatImage);
+                    command.Parameters.AddWithValue("@SailNumber", boat.SailNumber);
 					await command.ExecuteNonQueryAsync();
 				}
 				catch (Exception ex)
@@ -228,8 +230,9 @@ namespace SailClubLibrary.Services
 				reader.GetDouble("Draft"),
 				reader.GetDouble("Width"),
 				reader.GetDouble("BoatLength"),
-				reader.GetString("YearOfConstruction")
-			);
+				reader.GetString("YearOfConstruction"),
+                reader.IsDBNull(reader.GetOrdinal("BoatImage")) ? null : reader.GetString("BoatImage")
+            );
 		}
 	}
 }

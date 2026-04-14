@@ -9,10 +9,15 @@ namespace RazorBoatApp2026.Pages.Boats
     public class CreateBoatModel : PageModel
     {
 		private IBoatRepositoryAsync _bRepo;
-		[BindProperty] public Boat NewBoat { get; set; }
-		public CreateBoatModel(IBoatRepositoryAsync boatRepositoryAsync)
+		private IWebHostEnvironment _webHostEnvironment;
+
+        [BindProperty] public Boat NewBoat { get; set; }
+        [BindProperty] public IFormFile Photo { get; set; }
+
+        public CreateBoatModel(IBoatRepositoryAsync boatRepositoryAsync, IWebHostEnvironment webHostEnvironment)
 		{
 			_bRepo = boatRepositoryAsync;
+			_webHostEnvironment = webHostEnvironment;
 		}
 		public async Task OnGet()
         {
@@ -25,7 +30,16 @@ namespace RazorBoatApp2026.Pages.Boats
 			{
 				return Page();
 			}
-			try
+            if (Photo != null)
+            {
+                if (NewBoat.BoatImage != null)
+                {
+                    string filepath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "BoatImages", NewBoat.BoatImage);
+                    System.IO.File.Delete(filepath);
+                }
+                NewBoat.BoatImage = await ProcessUploadedFileAsync();
+            }
+            try
 			{
 				await _bRepo.AddAsync(NewBoat);
 				return RedirectToPage("Index");
@@ -41,5 +55,20 @@ namespace RazorBoatApp2026.Pages.Boats
 				return Page();
 			}
 		}
+        private async Task<string> ProcessUploadedFileAsync()
+        {
+            string uniqueFileName = null;
+            if (Photo != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/BoatImages");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + Photo.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await Photo.CopyToAsync(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
     }
 }

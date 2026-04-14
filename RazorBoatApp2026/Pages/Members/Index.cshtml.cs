@@ -17,9 +17,9 @@ namespace RazorBoatApp2026.Pages.Members
 		{
 			_mRepo = memberRepository;
 		}
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            Members = !string.IsNullOrEmpty(FilterCriteria) ? _mRepo.Filter(FilterCriteria) : _mRepo.GetAll();
+            Members = !string.IsNullOrEmpty(FilterCriteria) ? await _mRepo.FilterAsync(FilterCriteria) : await _mRepo.GetAllAsync();
             switch (SortBy)
             {
                 case "Name":
@@ -40,9 +40,9 @@ namespace RazorBoatApp2026.Pages.Members
             }
             return Page();
         }
-        public IActionResult OnPostDelete(string phoneNumber)
+        public async Task<IActionResult> OnPostDelete(string phoneNumber)
 		{
-			_mRepo.Remove(phoneNumber);
+			await _mRepo.RemoveAsync(phoneNumber);
 			return RedirectToPage("Index");
 		}
         public string GetSortIcon(string column)

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using SailClubLibrary.Data;
 using SailClubLibrary.Exceptions;
 using SailClubLibrary.Interfaces;
 using SailClubLibrary.Models;
@@ -58,10 +57,6 @@ namespace SailClubLibrary.Services
 					command.Parameters.AddWithValue("@MemberId", booking.TheMember.Id);
 					command.Parameters.AddWithValue("@BoatId", booking.TheBoat.Id);
 					await command.ExecuteNonQueryAsync();
-				}
-				catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
-				{
-					throw new ArgumentException("Database rejected duplicate EndDate.");
 				}
 				catch (Exception ex)
 				{

@@ -31,6 +31,7 @@
 			<form method="get">
 				<input type="hidden" name="SortDescending" id="SortDescending" value="@Model.SortDescending.ToString().ToLower()" />
 				<input type="hidden" asp-for="@Model.FilterCriteria" />
+			<th class="text-center">Image</th>
 			<th>
 				<button type="submit" name="SortBy" value="Id"
 						onclick="document.getElementById('SortDescending').value = ('@Model.SortBy' == 'Id') ? '@((!Model.SortDescending).ToString().ToLower())' : 'false';"
@@ -80,6 +81,9 @@
 		@foreach (Member member in Model.Members)
 		{
 			<tr>
+				<td>
+					<img src="~/images/MemberImages/@member.MemberImage" class="rounded-circle" width="80" height="70" />
+				</td>
 				<td>@member.Id</td>
 				<td>@member.FullName</td>
 				<td>@member.Address, @member.City</td>

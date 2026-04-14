@@ -8,18 +8,18 @@ namespace RazorBoatApp2026.Pages.Bookings
 {
 	public class IndexModel : PageModel
 	{
-		private IBookingRepository _bRepo;
+		private IBookingRepositoryAsync _bRepo;
 		public List<Booking> Bookings { get; set; }
 		[BindProperty(SupportsGet = true)] public string SortBy { get; set; }
 		[BindProperty(SupportsGet = true)] public bool SortDescending { get; set; }
 		[BindProperty(SupportsGet = true)] public string FilterCriteria { get; set; }
-		public IndexModel(IBookingRepository bookingRepository)
+		public IndexModel(IBookingRepositoryAsync bookingRepository)
 		{
 			_bRepo = bookingRepository;
 		}
-		public IActionResult OnGet()
+		public async Task<IActionResult> OnGet()
 		{
-			Bookings = !string.IsNullOrEmpty(FilterCriteria) ? _bRepo.Filter(FilterCriteria) : _bRepo.GetAll();
+			Bookings = !string.IsNullOrEmpty(FilterCriteria) ? await _bRepo.FilterAsync(FilterCriteria) : await _bRepo.GetAllAsync();
 			switch (SortBy)
 			{
 				case "StartDate":
@@ -43,9 +43,9 @@ namespace RazorBoatApp2026.Pages.Bookings
 			}
 			return Page();
 		}
-		public IActionResult OnPostDelete(int id)
+		public async Task<IActionResult> OnPostDelete(int id)
 		{
-			_bRepo.Remove(id);
+			await _bRepo.RemoveAsync(id);
 			return RedirectToPage("Index");
 		}
 		public string GetSortIcon(string column)
