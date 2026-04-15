@@ -25,9 +25,14 @@ namespace RazorBoatApp2026.Pages.Bookings
 			_boatRepo = boatRepository;
 			_bookingRepo = bookingRepository;
 		}
-		public async Task OnGet()
+		public async Task<IActionResult> OnGet()
 		{
-			NewBooking = new Booking()
+            string username = HttpContext.Session.GetString("Username");
+            if (username == null)
+            {
+                return RedirectToPage("/Users/Login");
+            }
+            NewBooking = new Booking()
 			{
 				Id = await _bookingRepo.SearchLowestNotTakenIdAsync(),
 				StartDate = DateTime.Now,
@@ -35,6 +40,7 @@ namespace RazorBoatApp2026.Pages.Bookings
 				SailCompleted = false
 			};
 			PopulateLists();
+			return Page();
 		}
 		public async Task<IActionResult> OnPost()
 		{

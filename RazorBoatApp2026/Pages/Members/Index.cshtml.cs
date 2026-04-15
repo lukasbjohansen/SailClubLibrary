@@ -19,6 +19,11 @@ namespace RazorBoatApp2026.Pages.Members
 		}
         public async Task<IActionResult> OnGet()
         {
+            string username = HttpContext.Session.GetString("Username");
+            if (username == null)
+            {
+                return RedirectToPage("/Users/Login");
+            }
             Members = !string.IsNullOrEmpty(FilterCriteria) ? await _mRepo.FilterAsync(FilterCriteria) : await _mRepo.GetAllAsync();
             switch (SortBy)
             {

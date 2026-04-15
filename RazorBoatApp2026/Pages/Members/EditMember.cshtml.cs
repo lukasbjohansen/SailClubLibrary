@@ -20,9 +20,15 @@ namespace RazorMemberApp2026.Pages.Members
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task OnGet(string phoneNumber)
+        public async Task<IActionResult> OnGet(string phoneNumber)
 		{
-			NewMember = await _mRepo.SearchAsync(phoneNumber);
+            string username = HttpContext.Session.GetString("Username");
+            if (username == null)
+            {
+                return RedirectToPage("/Users/Login");
+            }
+            NewMember = await _mRepo.SearchAsync(phoneNumber);
+            return Page();
 		}
 
 		public async Task<IActionResult> OnPost()

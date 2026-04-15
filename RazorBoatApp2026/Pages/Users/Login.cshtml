@@ -1,0 +1,23 @@
+﻿@page
+@model RazorBoatApp2026.Pages.Users.LoginModel
+@{
+}
+
+<h3>Login</h3>
+@Model.Message
+<form method="post">
+    <table>
+        <tr>
+            <td>Username (Poul or Charlotte)</td>
+            <td><Input type="text" asp-for="@Model.Username" /></td>
+        </tr>
+        <tr>
+            <td>Password (123)</td>
+            <td><Input type="password" asp-for="@Model.Password" /></td>
+        </tr>
+        <tr>
+            <td>&nbsp</td>
+            <td><Input type="submit" value="Login" /></td>
+        </tr>
+    </table>
+</form>

@@ -18,10 +18,16 @@ namespace RazorBoatApp2026.Pages.Members
 			_mRepo = memberRepository;
 			_webHostEnvironment = webHostEnvironment;
 		}
-		public async Task OnGet()
+		public async Task<IActionResult> OnGet()
 		{
-			NewMember = new Member();
+            string username = HttpContext.Session.GetString("Username");
+            if (username == null)
+            {
+                return RedirectToPage("/Users/Login");
+            }
+            NewMember = new Member();
 			NewMember.Id = await _mRepo.SearchLowestNotTakenIdAsync();
+			return Page();
 		}
 		public async Task<IActionResult> OnPost()
 		{

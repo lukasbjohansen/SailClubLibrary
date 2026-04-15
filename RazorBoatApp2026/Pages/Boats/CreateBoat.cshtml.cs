@@ -19,10 +19,16 @@ namespace RazorBoatApp2026.Pages.Boats
 			_bRepo = boatRepositoryAsync;
 			_webHostEnvironment = webHostEnvironment;
 		}
-		public async Task OnGet()
+		public async Task<IActionResult> OnGet()
         {
-			NewBoat = new Boat();
+            string username = HttpContext.Session.GetString("Username");
+            if (username == null)
+            {
+                return RedirectToPage("/Users/Login");
+            }
+            NewBoat = new Boat();
 			NewBoat.Id = await _bRepo.SearchLowestNotTakenIdAsync();
+            return Page();
 		}
 		public async Task<IActionResult> OnPost()
 		{

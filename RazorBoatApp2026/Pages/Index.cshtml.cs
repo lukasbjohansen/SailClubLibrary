@@ -5,15 +5,20 @@ namespace RazorBoatApp2026.Pages;
 public class IndexModel : PageModel
 {
 	private readonly ILogger<IndexModel> _logger;
-	public string Name { get; set; }
+	public string Username { get; set; }
 
 	public IndexModel(ILogger<IndexModel> logger)
 	{
 		_logger = logger;
 	}
 
-	public void OnGet()
+	public IActionResult OnGet()
 	{
-		Name = "Peter";
+		Username = HttpContext.Session.GetString("Username");
+		if (Username == null)
+		{
+			return RedirectToPage("/Users/Login");
+		}
+		return Page();
 	}
 }

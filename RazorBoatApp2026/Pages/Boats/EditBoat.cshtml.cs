@@ -18,9 +18,15 @@ namespace RazorBoatApp2026.Pages.Boats
             _bRepo = boatRepositoryAsync;
             _webHostEnvironment = webHostEnvironment;
         }
-        public async Task OnGet(string sailNumber)
+        public async Task<IActionResult> OnGet(string sailNumber)
         {
+            string username = HttpContext.Session.GetString("Username");
+            if (username == null)
+            {
+                return RedirectToPage("/Users/Login");
+            }
             NewBoat = await _bRepo.SearchAsync(sailNumber)!;
+            return Page();
         }
         public async Task<IActionResult> OnPost()
         {
