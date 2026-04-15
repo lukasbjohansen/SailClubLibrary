@@ -122,7 +122,7 @@ namespace SailClubLibrary.Services
 		}
 		public async Task RemoveAsync(string sailNumber)
 		{
-			string sql = $"DELETE FROM Boat b WHERE b.SailNumber = @SailNumber";
+			string sql = $"DELETE FROM Boat WHERE SailNumber = @SailNumber";
 			await using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				try
@@ -140,7 +140,7 @@ namespace SailClubLibrary.Services
 		}
 		public async Task<Boat?> SearchAsync(string sailNumber)
 		{
-			string sql = $"SELECT * FROM Boat b WHERE b.SailNumber = @SailNumber";
+			string sql = $"SELECT * FROM Boat WHERE SailNumber = @SailNumber";
 			await using(SqlConnection connection = new SqlConnection(connectionString))
 			{
 				try
@@ -163,7 +163,7 @@ namespace SailClubLibrary.Services
 		}
 		public async Task<Boat?> SearchAsync(int id)
 		{
-			string sql = $"SELECT * FROM Boat b WHERE b.BoatId = @Id";
+			string sql = $"SELECT * FROM Boat WHERE BoatId = @Id";
 			await using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				try

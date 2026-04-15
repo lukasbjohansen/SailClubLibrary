@@ -9,11 +9,7 @@
 
 <form method="post">
 	<input type="hidden" asp-for="NewBooking.SailCompleted" value="false" />
-	<div class="form-group">
-		<label asp-for="@Model.NewBooking.Id" class="control-label"></label>
-		<input asp-for="@Model.NewBooking.Id" readonly class="form-control" />
-		<span asp-validation-for="@Model.NewBooking.Id" class="text-danger"></span>
-	</div>
+	<input type="hidden" asp-for="@Model.NewBooking.Id" />
 	<div class="form-group">
 		<label asp-for="@Model.NewBooking.StartDate" class="control-label"></label>
 		<input asp-for="@Model.NewBooking.StartDate" class="form-control" />

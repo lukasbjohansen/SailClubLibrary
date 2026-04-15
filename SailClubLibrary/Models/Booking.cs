@@ -11,22 +11,32 @@ namespace SailClubLibrary.Models
     public class Booking : IRepositoryItem<int>
     {
         #region Properties
+
+        [Required(ErrorMessage = "StartDate required")]
+        public DateTime StartDate { get; set; }
+
+        [Required(ErrorMessage = "EndDate required")]
+        public DateTime EndDate { get; set; } 
+
+        [Required(ErrorMessage = "Destination required")]
+        [StringLength(30, ErrorMessage = "Destination must be at least 3 characters", MinimumLength = 3)]
+        public string Destination { get; set; }
+
         public int Id { get; set; }
+        public Member TheMember { get; set; }
+        public Boat TheBoat { get; set; }
+        public bool SailCompleted { get; set; }
+
         public int Key { get => Id; set => Id = value; }
-		public DateTime StartDate { get; set; }
-		public DateTime EndDate { get; set; }
-		public bool IsActive
+        public bool IsActive
         {
             get
             {
                 return StartDate <= DateTime.Now && DateTime.Now <= EndDate;
             }
         }
-        public bool SailCompleted { get; set; }
-        public string Destination { get; set; }
-        public Member TheMember { get; set; }
-        public Boat TheBoat { get; set; }
         #endregion
+
         #region Constructor
         public Booking(int id, DateTime startDate, DateTime endDate, string destination, Member member, Boat boat)
         {

@@ -120,7 +120,7 @@ namespace SailClubLibrary.Services
 		}
 		public async Task RemoveAsync(int bookingId)
 		{
-			string sql = $"DELETE FROM Booking b WHERE b.BookingId = @BookingId";
+			string sql = $"DELETE FROM Booking WHERE BookingId = @BookingId";
 			await using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				try
@@ -138,7 +138,7 @@ namespace SailClubLibrary.Services
 		}
 		public async Task<Booking?> SearchAsync(int bookingId)
 		{
-			string sql = $"SELECT * FROM Booking b WHERE b.BookingId = @BookingId";
+			string sql = $"SELECT * FROM Booking WHERE BookingId = @BookingId";
 			await using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				try

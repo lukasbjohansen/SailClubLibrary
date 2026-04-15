@@ -48,7 +48,12 @@ namespace RazorBoatApp2026.Pages.Members
 				ViewData["ErrorMessage"] = bex.Message;
 				return Page();
 			}
-			catch (Exception e)
+            catch (ArgumentException aex)
+            {
+                ViewData["ErrorMessage"] = aex.Message;
+                return Page();
+            }
+            catch (Exception e)
 			{
 				ViewData["ErrorMessage"] = e.Message;
 				return Page();

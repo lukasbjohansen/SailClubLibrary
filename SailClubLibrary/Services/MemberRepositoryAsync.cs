@@ -12,11 +12,18 @@ using System.Threading.Tasks;
 
 namespace SailClubLibrary.Services
 {
-	public class MemberRepositoryAsync : RepositoryAsync<string, Member>, IMemberRepositoryAsync
+    /// <summary>
+    /// Repository for CRUD of members via ADO.NET to MS SQL server. Every operation is performed asynchronous.
+    /// </summary>
+    public class MemberRepositoryAsync : RepositoryAsync<string, Member>, IMemberRepositoryAsync
 	{
-		public async Task<int> Count()
+        /// <summary>
+        /// Gets the count of members from the database asynchronous.
+        /// </summary>
+        /// <returns>The amount of <see cref="Member"/> in the database.</returns>
+        public async Task<int> Count()
 		{
-			string _countSql = "SELECT COUNT(*) FROM Member";
+			string _countSql = "SELECT COUNT(*) FROM SailClubMember";
 			await using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				try
@@ -32,8 +39,13 @@ namespace SailClubLibrary.Services
 				}
 			}
 		}
-
-		public async Task AddAsync(Member member)
+        /// <summary>
+        /// Adds a new <see cref="Member"/> to the database.
+        /// </summary>
+        /// <param name="member">The new <see cref="Member"/> to add to database.</param>
+        /// <returns>A <see cref="Task"/> since the method is asynchronous.</returns>
+        /// <exception cref="ArgumentException">Thrown if the new <see cref="Member"/> shares <see cref="Member.PhoneNumber"/> with an existing member.</exception>
+        public async Task AddAsync(Member member)
 		{
 			string _addMemberSql = "INSERT INTO SailClubMember (FirstName, SurName, PhoneNumber, MemberAddress, City, Mail, MemberType, MemberRole, MemberImage) " +
                                            "VALUES (@FirstName, @SurName, @PhoneNumber, @MemberAddress, @City, @Mail, @MemberType, @MemberRole, @MemberImage)";
@@ -64,6 +76,10 @@ namespace SailClubLibrary.Services
 				}
 			}
 		}
+		/// <summary>
+		/// Fetches all <see cref="Member"/> from the database.
+		/// </summary>
+		/// <returns>A <see cref="List{T}"/> of <see cref="Member"/> containing all members from the database.</returns>
 		public override async Task<List<Member>> GetAllAsync()
 		{
 			List<Member> members = new List<Member>();
@@ -87,6 +103,11 @@ namespace SailClubLibrary.Services
 				return members;
 			}
 		}
+		/// <summary>
+		/// Fetches all members from the database that matches the <paramref name="filterCriteria"/> in any attribute.
+		/// </summary>
+		/// <param name="filterCriteria">A string used to filter <see cref="Member"/> only with at least one attribute containing it.</param>
+		/// <returns>A <see cref="List{T}"/> of <see cref="Member"/> containing all <see cref="Member"/> that match the <paramref name="filterCriteria"/>.</returns>
 		public async Task<List<Member>> FilterAsync(string filterCriteria)
 		{
 			List<Member> members = new List<Member>();
@@ -119,16 +140,21 @@ namespace SailClubLibrary.Services
 			}
 			return members;
 		}
-		public async Task RemoveAsync(string phoneNo)
+        /// <summary>
+        /// Removes a member from the database with the specific <paramref name="phoneNumber"/>.
+        /// </summary>
+        /// <param name="phoneNumber">The phonenumber of the <see cref="Member"/> that should be removed.</param>
+        /// <returns>A <see cref="Task"/> since the method is asynchronous.</returns>
+        public async Task RemoveAsync(string phoneNumber)
 		{
-			string sql = $"DELETE FROM SailClubMember b WHERE b.PhoneNumber = @PhoneNo";
+			string sql = $"DELETE FROM SailClubMember WHERE PhoneNumber = @PhoneNo";
 			await using (SqlConnection connection = new SqlConnection(connectionString))
 			{
 				try
 				{
 					SqlCommand command = new SqlCommand(sql, connection);
 					await connection.OpenAsync();
-					command.Parameters.AddWithValue("@PhoneNo", phoneNo);
+					command.Parameters.AddWithValue("@PhoneNo", phoneNumber);
 					await command.ExecuteNonQueryAsync();
 				}
 				catch (Exception ex)
@@ -137,16 +163,21 @@ namespace SailClubLibrary.Services
 				}
 			}
 		}
-        public async Task<Member?> SearchAsync(string phoneNo)
+		/// <summary>
+		/// Fetches a specific member matched by the given <paramref name="phoneNumber"/>.
+		/// </summary>
+		/// <param name="phoneNumber">The phonenumber of the <see cref="Member"/> to search for.</param>
+		/// <returns>A <see cref="Member"/> with <paramref name="phoneNumber"/> as their phonenumber or <see langword="null"/> if no <see cref="Member"/> exists with that phonenumber.</returns>
+        public async Task<Member?> SearchAsync(string phoneNumber)
         {
-            string sql = $"SELECT * FROM SailClubMember b WHERE b.PhoneNumber = @PhoneNo";
+            string sql = $"SELECT * FROM SailClubMember WHERE PhoneNumber = @PhoneNo";
             await using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
                 {
                     SqlCommand command = new SqlCommand(sql, connection);
                     await connection.OpenAsync();
-                    command.Parameters.AddWithValue("@PhoneNo", phoneNo);
+                    command.Parameters.AddWithValue("@PhoneNo", phoneNumber);
                     await using SqlDataReader reader = await command.ExecuteReaderAsync();
                     if (await reader.ReadAsync())
                     {
@@ -160,16 +191,21 @@ namespace SailClubLibrary.Services
                 return null;
             }
         }
-        public async Task<Member?> SearchAsync(int memberId)
+        /// <summary>
+        /// Fetches a specific member matched by the given <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The id of the <see cref="Member"/> to search for.</param>
+        /// <returns>A <see cref="Member"/> with <paramref name="id"/> as their id or <see langword="null"/> if no <see cref="Member"/> exists with that id.</returns>
+        public async Task<Member?> SearchAsync(int id)
         {
-            string sql = $"SELECT * FROM SailClubMember b WHERE b.MemberId = @MemberId";
+            string sql = $"SELECT * FROM SailClubMember WHERE MemberId = @MemberId";
             await using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
                 {
                     SqlCommand command = new SqlCommand(sql, connection);
                     await connection.OpenAsync();
-                    command.Parameters.AddWithValue("@MemberId", memberId);
+                    command.Parameters.AddWithValue("@MemberId", id);
                     await using SqlDataReader reader = await command.ExecuteReaderAsync();
                     if (await reader.ReadAsync())
                     {
@@ -183,6 +219,11 @@ namespace SailClubLibrary.Services
                 return null;
             }
         }
+        /// <summary>
+        /// Updates a <see cref="Member"/> with same phonenumber as <paramref name="member"/> in the database with the values of <paramref name="member"/>. The old <see cref="Member"/> retains their original id.
+        /// </summary>
+        /// <param name="member">The new <see cref="Member"/> object.</param>
+        /// <returns>A <see cref="Task"/> since the method is asynchronous.</returns>
         public async Task UpdateAsync(Member member)
 		{
 			string sql = @"UPDATE SailClubMember 
@@ -207,8 +248,8 @@ namespace SailClubLibrary.Services
 					command.Parameters.AddWithValue("@City", member.City);
 					command.Parameters.AddWithValue("@Mail", member.Mail);
 					command.Parameters.AddWithValue("@MemberType", member.TheMemberType);
-					command.Parameters.AddWithValue("@MemberRole", member.TheMemberRole);
-					command.Parameters.AddWithValue("@MemberImage", member.MemberImage);
+					command.Parameters.AddWithValue("@MemberRole", member.TheMemberRole); 
+					command.Parameters.AddWithValue("@MemberImage", (object)member.MemberImage ?? DBNull.Value);
                     command.Parameters.AddWithValue("@PhoneNumber", member.PhoneNumber);
                     await command.ExecuteNonQueryAsync();
 				}
@@ -218,6 +259,11 @@ namespace SailClubLibrary.Services
 				}
 			}
 		}
+		/// <summary>
+		/// A private helper method for fetching a <see cref="Member"/> object from a <paramref name="reader"/>. Used by various methods in this class to enforce the DRY principle.
+		/// </summary>
+		/// <param name="reader">The reader containing a <see cref="Member"/></param>
+		/// <returns>A new <see cref="Member"/> object with info taken from the <paramref name="reader"/></returns>
 		private async Task<Member> MapMemberFromReader(SqlDataReader reader)
 		{
             return new Member(

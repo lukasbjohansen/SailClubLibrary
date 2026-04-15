@@ -1,6 +1,7 @@
 ﻿using SailClubLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,24 +14,43 @@ namespace SailClubLibrary.Models
         #endregion
 
         #region Properties
+        [Required(ErrorMessage = "Firstname required")]
+        [StringLength(30, ErrorMessage = "Firstname must be at least 2 characters", MinimumLength = 2)]
         public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Surname required")]
+        [StringLength(20, ErrorMessage = "Surname must be at least 2 characters", MinimumLength = 2)]
         public string SurName { get; set; }
-        public string FullName 
-        { 
-            get
-            {
-                return FirstName + " " + SurName;
-            } 
-        }
+
+        [Required(ErrorMessage = "Phonenumber required")]
+        [RegularExpression(@"^(\+\d{2})?\s?[2-9]\d\s?\d{2}\s?\d{2}\s?\d{2}$", ErrorMessage = "Phonenumber must be a valid format")]
         public string PhoneNumber { get; set; }
-        public string Key { get => PhoneNumber; set => PhoneNumber = value; }
-		public string Address { get; set; }
+
+        [Required(ErrorMessage = "Address required")]
+        [StringLength(50, ErrorMessage = "Address must be at least 5 characters", MinimumLength = 5)]
+        public string Address { get; set; }
+
+        [Required(ErrorMessage = "City required")]
+        [StringLength(30, ErrorMessage = "City must be at least 3 characters", MinimumLength = 3)]
         public string City { get; set; }
+
+        [EmailAddress(ErrorMessage = "Invalid mail")]
+        [StringLength(100, ErrorMessage = "Mail must be at least 3 characters", MinimumLength = 3)]
         public string Mail { get; set; }
+
         public MemberType TheMemberType { get; set; }
         public MemberRole TheMemberRole { get; set; }
         public int Id { get; set; }
         public string? MemberImage { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + SurName;
+            }
+        }
+        public string Key { get => PhoneNumber; set => PhoneNumber = value; }
         #endregion
 
         #region Constructor

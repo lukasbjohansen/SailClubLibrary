@@ -18,20 +18,36 @@ namespace SailClubLibrary.Models
         #endregion
 
         #region Properties
-        [Required(ErrorMessage ="Id is required")]
-        public int Id { get; set; }
-        public BoatType TheBoatType { get; set; }
+        [Required(ErrorMessage = "Model required")]
+        [StringLength(30, ErrorMessage = "Model must be at least 2 characters", MinimumLength = 2)]
         public string Model { get; set; }
-        [Required(ErrorMessage ="Sailnumber is required")]
+
+        [Required(ErrorMessage = "Sailnumber required")]
+        [StringLength(10, ErrorMessage = "SailNumber must be at least 2 characters", MinimumLength = 2)]
         public string SailNumber { get; set; }
-        public string Key { get => SailNumber; set => SailNumber = value; }
-		public string EngineInfo { get; set; }
+
+        [Required(ErrorMessage = "Engine info required")]
+        [StringLength(20, ErrorMessage = "EngineInfo must be at least 2 characters", MinimumLength = 2)]
+        public string EngineInfo { get; set; }
+
+        [Required(ErrorMessage = "Draft required")]
         public double Draft { get; set; }
+
+        [Required(ErrorMessage = "Width required")]
         public double Width { get; set; }
+
+        [Required(ErrorMessage = "Length required")]
         public double Length { get; set; }
+
+        [Required(ErrorMessage = "YearOfConstruction required")]
+        [StringLength(4, ErrorMessage = "Year of construction must be 4 characters", MinimumLength = 4)]
         public string YearOfConstruction { get; set; }
+
+        public BoatType TheBoatType { get; set; }
+        public int Id { get; set; }
         public string? BoatImage { get; set; }
 
+        public string Key { get => SailNumber; set => SailNumber = value; }
         #endregion
         public Boat()
         {
